@@ -1,0 +1,20 @@
+language: node
+
+node:
+  - 12
+
+services:
+  - docker
+
+install:
+  - npm i
+
+before_script:
+  - npm run build
+
+script:
+  - docker build . -t pnshiralkar/udagram-users-api
+
+after_success:
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+  - docker push pnshiralkar/udagram-users-api
